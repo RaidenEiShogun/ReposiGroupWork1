@@ -1,76 +1,18 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 public class fullApp {
-
     private static Map<String, String> productCategories = new HashMap<>();
     private static Map<String, Integer> warehouse = new HashMap<>();
     private static DefaultListModel<String> cartModel = new DefaultListModel<>();
     private static DefaultListModel<String> purchaseHistoryModel = new DefaultListModel<>();
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Electronic Store");
-            frame.setSize(800, 600);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            JPanel mainPanel = new JPanel(new BorderLayout());
-            mainPanel.setBackground(new Color(240, 240, 240));
-
-            DefaultListModel<String> productList = new DefaultListModel<>();
-            JList<String> productJList = new JList<>(productList);
-            productCategories.keySet().forEach(productList::addElement);
-
-            JButton productsButton = createStyledButton("Товары", Color.BLUE);
-            JButton ordersButton = createStyledButton("Заказать", Color.GREEN);
-            JButton cartButton = createStyledButton("Корзина", Color.ORANGE);
-            JButton stockAdjustmentButton = createStyledButton("Регулировка запасов", Color.RED);
-            JButton warehouseButton = createStyledButton("Склад", Color.CYAN);
-            JButton purchaseHistoryButton = createStyledButton("История покупок", Color.MAGENTA);
-
-            productsButton.addActionListener(e -> displayProductsByCategory(productList));
-            ordersButton.addActionListener(e -> orderProduct(productList, productJList.getSelectedValue()));
-            cartButton.addActionListener(e -> displayCart());
-            stockAdjustmentButton.addActionListener(e -> adjustStock());
-            warehouseButton.addActionListener(e -> displayWarehouse());
-            purchaseHistoryButton.addActionListener(e -> displayPurchaseHistory());
-
-            JPanel buttonPanel = new JPanel(new GridLayout(2, 3, 10, 10));
-            buttonPanel.setBackground(new Color(200, 200, 200));
-            buttonPanel.add(productsButton);
-            buttonPanel.add(ordersButton);
-            buttonPanel.add(cartButton);
-            buttonPanel.add(stockAdjustmentButton);
-            buttonPanel.add(warehouseButton);
-            buttonPanel.add(purchaseHistoryButton);
-
-            mainPanel.add(buttonPanel, BorderLayout.NORTH);
-            mainPanel.add(new JScrollPane(productJList), BorderLayout.CENTER);
-            frame.add(mainPanel);
-            frame.setVisible(true);
-        });
-    }
-
-    private static JButton createStyledButton(String text, Color color) {
-        JButton button = new JButton(text);
-        button.setBackground(color);
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial", Font.PLAIN, 16));
-        button.setFocusPainted(false);
-        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-
-        return button;
-    }
-
-    private static void displayProductsByCategory(DefaultListModel<String> productList) {
-        productList.clear();
-        productCategories.keySet().forEach(productList::addElement);
+    static {
         productCategories.put("IPHONE", "Electronics");
         productCategories.put("Laptop", "Electronics");
         productCategories.put("Benena", "Groceries");
@@ -134,11 +76,70 @@ public class fullApp {
         warehouse.put("Blanket", 20);
         warehouse.put("Dumbbells", 20);
         warehouse.put("Headphones", 20);
-        }
+    }
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Electronic Store");
+            frame.setSize(800, 600);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+            JPanel mainPanel = new JPanel(new BorderLayout());
+            mainPanel.setBackground(new Color(240, 240, 240));
 
+            DefaultListModel<String> productList = new DefaultListModel<>();
+            JList<String> productJList = new JList<>(productList);
+            productCategories.keySet().forEach(productList::addElement);
+            JButton productsButton = createStyledButton("Товары", Color.BLUE);
+            JButton ordersButton = createStyledButton("Заказать", Color.GREEN);
+            JButton cartButton = createStyledButton("Корзина", Color.ORANGE);
+            JButton stockAdjustmentButton = createStyledButton("Регулировка запасов", Color.RED);
+            JButton warehouseButton = createStyledButton("Склад", Color.CYAN);
+            JButton purchaseHistoryButton = createStyledButton("История покупок", Color.MAGENTA);
 
+            productsButton.addActionListener(e -> displayProductsByCategory(productList));
+
+            ordersButton.addActionListener(e -> orderProduct(productList, productJList.getSelectedValue()));
+
+            cartButton.addActionListener(e -> displayCart());
+
+            stockAdjustmentButton.addActionListener(e -> adjustStock());
+
+            warehouseButton.addActionListener(e -> displayWarehouse());
+
+            purchaseHistoryButton.addActionListener(e -> displayPurchaseHistory());
+
+            JPanel buttonPanel = new JPanel(new GridLayout(2, 3, 10, 10));
+            buttonPanel.setBackground(new Color(200, 200, 200));
+            buttonPanel.add(productsButton);
+            buttonPanel.add(ordersButton);
+            buttonPanel.add(cartButton);
+            buttonPanel.add(stockAdjustmentButton);
+            buttonPanel.add(warehouseButton);
+            buttonPanel.add(purchaseHistoryButton);
+
+            mainPanel.add(buttonPanel, BorderLayout.NORTH);
+            mainPanel.add(new JScrollPane(productJList), BorderLayout.CENTER);
+            frame.add(mainPanel);
+            frame.setVisible(true);
+        });
+    }
+
+    private static JButton createStyledButton(String text, Color color) {
+        JButton button = new JButton(text);
+        button.setBackground(color);
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Arial", Font.PLAIN, 16));
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+        return button;
+    }
+
+    private static void displayProductsByCategory(DefaultListModel<String> productList) {
+        productList.clear();
+        productCategories.keySet().forEach(productList::addElement);
+    }
 
     private static void orderProduct(DefaultListModel<String> productList, String selectedProduct) {
         if (selectedProduct != null) {
@@ -176,6 +177,7 @@ public class fullApp {
             return;
         }
 
+        //iyhnica .feat BAMBULA typii CO, [07.12.2023 18:16]
         StringBuilder orderDetails = new StringBuilder("Замовлення: ");
         for (int i = 0; i < cartModel.size(); i++) {
             orderDetails.append(cartModel.get(i));
@@ -204,7 +206,7 @@ public class fullApp {
         JPanel panel = new JPanel(new GridLayout(2, 2));
         panel.add(new JLabel("Назва товару:"));
         panel.add(productField);
-        panel.add(new JLabel("Скільки ви хочете додати до складу:"));
+        panel.add(new JLabel("Кількість одиниць:"));
         panel.add(quantityField);
 
         int result = JOptionPane.showConfirmDialog(null, panel, "Регулювання запасів", JOptionPane.OK_CANCEL_OPTION);
@@ -213,13 +215,27 @@ public class fullApp {
             try {
                 String productName = productField.getText();
                 int quantity = Integer.parseInt(quantityField.getText());
-                // ... (perform stock adjustment logic)
+
+                if (warehouse.containsKey(productName)) {
+                    int currentQuantity = warehouse.get(productName);
+                    warehouse.put(productName, warehouse.put(productName, currentQuantity + quantity));
+                    JOptionPane.showMessageDialog(null, "Запаси для товару '" + productName + "' оновлено.", "Успіх", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Товар '" + productName + "' не знайдено на складі.", "Помилка", JOptionPane.ERROR_MESSAGE);
+                }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Введено невірне значення для кількості товару.", "Помилка", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Будь ласка, введіть коректну кількість.", "Помилка", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    private static void displayPurchaseHistory(){
+    private static void displayPurchaseHistory() {
+        if (purchaseHistoryModel.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Історія покупок порожня.", "Інформація", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        JList<String> historyJList = new JList<>(purchaseHistoryModel);
+        JOptionPane.showMessageDialog(null, new JScrollPane(historyJList), "Історія покупок", JOptionPane.PLAIN_MESSAGE);
     }
 }
